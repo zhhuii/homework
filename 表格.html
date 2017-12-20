@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+		outline: none;
+	}
+	section{
+		width:700px;
+		height:auto;
+		border: 1px solid #cccccc;
+		border-radius: 10px;
+		margin: 0 auto;
+		margin-top: 50px;
+	}
+	table{
+		width:700px;
+		height:auto;
+	}
+	th{
+		border-left:1px solid #cccccc;
+		border-bottom:1px solid #cccccc;
+		padding: 20px 12px;
+		border-radius: 10px;
+	}
+	td{
+		border-left:1px solid #cccccc;
+		border-bottom:1px solid #cccccc;
+		padding: 20px 12px;
+		text-align: center;
+		border-radius: 10px;
+	}
+	button{
+		border: 0;
+		padding: 10px 12px;
+		float: right;
+		margin-right: 12px;
+		border-radius: 10px;
+		margin-bottom: 5px;
+	}
+</style>
+<body>
+	<section>
+		<table>
+			<tr>
+				<th>姓名</th>
+				<th>性别</th>
+				<th>籍贯</th>
+				<th>班级</th>
+				<th>电话</th>
+				<th>操作</th>
+			</tr>
+		</table>
+		<button>添加</button>
+		<div style="clear:both;"></div>
+	</section>
+</body>
+</html>
+<!--双击之后,保存表格内容,删除,添加表单,表单的值等于表格内容;失去焦点时,保存新内容,删除表单,表格内容等于新内容
+	数据与视图需要同步   删除表格，添加表格，修改表格，都需要与数据同步
+	同步：数据与视图都需要一个相同的数据(id)，用相同的数据(id)绑定
+	删除：删除视图之后，使相对应的表格也在数据中删除(留下没删除的表格)
+	添加：添加视图之后，数据也添加相对应的表格，并且让id自增。否则会删除id相同的
+	        得有判断，如果td为真(即有td)，自增，如果没有，td.id=1
+	修改：修改视图之后，先获取修改的td的父元素(tr)的id，遍历数据中的tr，判断如果相同的话把修改之后的内容添加到数据
+-->
+<script>
+	window.onload = function(){
+		let table = document.querySelector('tbody');
+		let button = document.querySelector('button');
+//        let arr = [
+//            {id:1,name:'张三',bj:'1709',sex:'男',jg:'山西',phone:'123456'},
+//            {id:2,name:'李四',bj:'1709',sex:'男',jg:'山西',phone:'123456'},
+//            {id:3,name:'王五',bj:'1709',sex:'男',jg:'山西',phone:'123456'},
+//            {id:4,name:'张三',bj:'1709',sex:'男',jg:'山西',phone:'123456'},
+//            {id:5,name:'张三',bj:'1709',sex:'男',jg:'山西',phone:'123456'},
+//        ]
+//        localStorage.setItem('student',JSON.stringify(arr))
+		let arr1 = (JSON.parse(localStorage.getItem('student')));
+		arr1.forEach(e =>{
+			creater(e);
+		})
+		function creater(e){
+			let trs = document.createElement('tr');
+			trs.id = e.id;
+			trs.innerHTML = `
+					<td type="name">${e.name}</td>
+					<td type="sex">${e.sex}</td>
+					<td type="jg">${e.jg}</td>
+					<td type="bj">${e.bj}</td>
+					<td type="phone">${e.phone}</td>
+					<td class="del">删除</td>
+			`;
+			table.appendChild(trs);
+		}
+		table.ondblclick = function(e){
+			let ee = e.target;
+			if(ee.nodeName == 'TD' && ee.className!= 'del'){
+				let oldv = ee.innerText;
+				ee.innerText = '';
+				let inputs = document.createElement('input');
+				inputs.setAttribute("autofocus", "autofocus");
+				ee.appendChild(inputs);
+				inputs.focus();
+				inputs.value = oldv;
+				inputs.onblur = function(){
+//                    哪一条   修改了什么   修改之后的值
+					let newv = inputs.value;
+					ee.removeChild(inputs);
+					ee.innerText = newv;
+					let id = ee.parentNode.id;
+					type = ee.getAttribute('type');
+					for(let i =0;i<arr1.length;i++){
+						if(arr1[i].id == id){
+							arr1[i][type] = newv;
+						}
+					}
+					localStorage.setItem('student',JSON.stringify(arr1))
+				}
+			}else if(ee.className == 'del'){
+				let trs = ee.parentNode;
+				table.removeChild(trs);
+				arr1 = arr1.filter(e => e.id!=trs.id);
+				localStorage.setItem('student',JSON.stringify(arr1));
+			}
+		}
+		button.onclick = function(){
+			let id =1;
+			if(arr1[arr1.length-1]){
+				id = arr1[arr1.length-1].id + 1;
+			}else{
+				id = 1;
+			}
+			creater({id:id,name:'张三',bj:'1709',sex:'男',jg:'山西',phone:'123456'});
+			arr1.push({id:id,name:'张三',bj:'1709',sex:'男',jg:'山西',phone:'123456'});
+			localStorage.setItem('student',JSON.stringify(arr1));
+		}
+	}
+</script>

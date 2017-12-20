@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    canvas{
+        border: 1px solid ;
+    }
+    *{
+        margin:0;
+        padding:0;
+    }
+    .box{
+        width:100px;
+        height:100px;
+        float: left;
+        font-size:30px;
+        line-height: 100px;
+        text-align: center;
+        font-weight: 600;
+        color: #cccccc;
+    }
+    .son{
+        height:100px;
+        float: left;
+        font-size:30px;
+        line-height: 100px;
+        text-align: center;
+        font-weight: 600;
+        color: #cccccc;
+        margin-left: 5px;
+    }
+    span{
+        color: #fff;
+    }
+    section{
+        width:615px;
+        height:100px;
+        background-color: red;
+        margin: 0 auto;
+        border-radius: 20px;
+        margin-top: 100px;
+    }
+    span:last-child{
+        color: #000;
+    }
+</style>
+<body>
+    <section>
+        <div class="son">距离圣诞节还有</div>
+        <div class="box"><span></span>天</div>
+        <div class="box"><span></span>时</div>
+        <div class="box"><span></span>分</div>
+        <div class="box"><span></span>秒</div>
+        <span></span>
+    </section>
+    <canvas width="300" height="400">
+        替换内容
+        <!--如果不识别canvas，会显示替换的内容-->
+    </canvas>
+    <canvas width="300" height="400">
+        替换内容
+        <!--如果不识别canvas，会显示替换的内容-->
+    </canvas>
+    <canvas width="300" height="400">
+        替换内容
+        <!--如果不识别canvas，会显示替换的内容-->
+    </canvas>
+    <canvas width="300" height="400">
+        替换内容
+        <!--如果不识别canvas，会显示替换的内容-->
+    </canvas>
+</body>
+</html>
+<script>
+window.onload = function(){
+    //css里设置width和height相当于把画布缩放
+//画图环境
+    let  canvas = document.querySelectorAll('canvas');
+//获取画笔
+    let ctx1 = canvas[0].getContext('2d');
+    let ctx2 = canvas[1].getContext('2d');
+    let ctx3 = canvas[2].getContext('2d');
+    let ctx4 = canvas[3].getContext('2d');
+//    ctx.fillRect(0,0,100,100)
+//fillStyle只对后面的有影响，不对前面有影响
+//    ctx.fillStyle = 'red';
+//    ctx.strokeStyle = 'red';
+//填充矩形，前两个参数是位置，后两个是大小
+//    ctx.fillRect(0,0,100,100)
+//描边矩形，前两个参数是位置，后两个是大小
+//    ctx.strokeRect(100,100,100,100)
+//擦除，前两个是位置，后两个是擦除的大小
+//    ctx.clearRect(10,10,10,10)
+//180   Math.PI
+//30    (Math.PI)/6         两个位置，一个半径，开始的角度，结束的弧度 false/true
+//    ctx.arc(100,100,100,0,Math.PI)
+//
+//正方形
+//    ctx.beginPath()
+//    ctx.moveTo(50,50);
+//    ctx.lineTo(100,50);
+//    ctx.lineTo(100,100);
+//    ctx.lineTo(50,100);
+//    ctx.lineTo(50,50);
+//    ctx.closePath();
+//    ctx.fill();
+//三角形
+//    ctx.beginPath()
+//    ctx.moveTo(100,100);
+//    ctx.lineTo(150,150);
+//    ctx.lineTo(100,150);
+//    ctx.lineTo(100,100);
+//    ctx.closePath();
+//    ctx.fill();
+
+//笑脸
+//        ctx.beginPath();
+//        ctx.arc(150,150,100,0,Math.PI*2,true);
+//        ctx.moveTo(110,120);
+//        ctx.arc(100,120,10,0,Math.PI,true);
+//        ctx.moveTo(210,120);
+//        ctx.arc(200,120,10,0,Math.PI,true);
+//        ctx.moveTo(200,180);
+//        ctx.arc(150,180,50,0,Math.PI,false);
+//        ctx.stroke();
+
+
+//  0       1       2
+//    m+r     2m+3r   3m+5r
+//    (j+1)*10+(2*j+1)*40
+
+//    let PI = Math.PI;
+//    for(let i=0;i<4;i++){
+//        for(let j=0;j<3;j++){
+//            let     x= (j+1)*10 + (2*j+1)*40,
+//                    y = (i+1)*10 + (2*i+1)*40,
+//                    color = `rgb(${255-70*j},${255-70*i},0`,
+//                    wise = i%2 == 0 ? false:true;
+//            ctx.beginPath();
+//            ctx.arc(x,y,40,0,PI+PI/2*j,wise);
+//            if(i>1){
+//                ctx.fillStyle = color;
+//                ctx.fill();
+//            }else{
+//                ctx.strokeStyle = color;
+//                ctx.stroke();
+//            }
+//        }
+//    }
+//    多边形
+    dbx(6);
+    function dbx(num){
+        let r = 100;
+        let a = 2 * Math.PI / num;
+        ctx1.beginPath();
+        ctx1.moveTo(150+r,150);
+        for(let i = 0;i < num;i++){
+            let x = 150 + r * Math.cos(a * i);
+            let y = 150 + r * Math.sin(a * i);
+            ctx1.lineTo(x,y);
+        }
+        ctx1.closePath();
+        ctx1.stroke();
+    }
+//五角星
+    wjx(5);
+    function wjx(num){
+        let R = 100;
+        let a = 4 * Math.PI / num;
+        ctx2.beginPath();
+        ctx2.moveTo(150+R,150);
+        for(let i = 0;i < num;i++){
+            let X = 150 + R * Math.cos(a * i);
+            let Y = 150 + R * Math.sin(a * i);
+            ctx2.lineTo(X,Y);
+        }
+        ctx2.closePath();
+        ctx2.stroke();
+    }
+//加载
+    let a = 0;
+    let t = setInterval(function(){
+        a++;
+        let dge = 2*Math.PI/100;
+        let r = 75;
+        ctx3.clearRect(50,50,150,150);
+        ctx3.beginPath();
+        ctx3.moveTo(215,125);
+        ctx3.arc(140,125,r,0,dge*a);
+        ctx3.lineWidth = 2;
+        ctx3.strokeStyle = 'aqua';
+        ctx3.stroke();
+        ctx3.closePath();
+        ctx3.font = '24px San Francisco';
+        ctx3.strokeText(`${a}%`,120,130);
+        if(a == 100){
+            clearInterval(t);
+        }
+    },100)
+
+
+//画线
+
+    canvas[3].onmousedown = function(e){
+//        let ox = e.clientX-canvas[3].offsetLeft;
+//        let oy = e.clientY-canvas[3].offsetHeight;
+//        ctx4.moveTo(ox,oy);
+        ctx4.beginPath()
+        document.onmousemove = function (e) {
+//            let cx = e.clientX-canvas[3].offsetLeft;
+//            let cy = e.clientY-canvas[3].offsetHeight;
+            let cx = e.offsetX;
+            let cy = e.offsetY;
+            ctx4.lineTo(cx,cy);
+            ctx4.stroke();
+        }
+        document.onmouseup = function () {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+    }
+
+
+    djs(3);
+    let box = document.querySelectorAll('span');
+    move1();
+    setInterval(move1,1000);
+    function move1() {
+        let date = new Date(2017, 11, 25, 00, 00, 00);
+        let now = new Date();
+        let time = Math.floor((date.getTime() - now.getTime()) / 1000);
+        let day = Math.floor(time / 60 / 60 / 24);
+        let hour = parseInt(time / 60 / 60 % 24);
+        let minute = parseInt(time / 60 % 60);
+        let seconds = parseInt(time % 60)
+        box[0].innerText = day;
+        box[1].innerText = hour;
+        box[2].innerText = minute;
+        box[3].innerText = seconds;
+    }
+    function djs(e){
+        e = e*60;
+        let t = setInterval(move,1000);
+        function move(){
+            e--;
+            let minute = parseInt(e/60%60);
+            let seconds = parseInt(e%60);
+            box[4].innerText = `${minute}:${seconds}`;
+        }
+        if(e<0){
+            clearInterval(t);
+        }
+    }
+}
+</script>
