@@ -1,9 +1,9 @@
 class  Code{
 	constructor(){
-		this.char=[['A','img/A.png'],['B','img/B.png'],['C','img/C.png'],['D','img/D.png'],['E','img/E.png'],
-        ['F','img/F.png'],['J','img/J.png'],['H','img/H.png'],['I','img/I.png'],['G','img/G.png'],['K','img/K.png'],
-        ['L','img/L.png'],['M','img/M.png'],['N','img/N.png'],['O','img/O.png'],['P','img/P.png'],['Q','img/Q.png'],
-        ['R','img/R.png'],['S','img/S.png'],['T','img/T.png'],['U','img/U.png'],['V','img/V.png'],['W','img/W.png']];
+		this.char=[['A','img/a.png'],['B','img/b.png'],['C','img/c.png'],['D','img/d.png'],['E','img/e.png'],
+        ['F','img/f.png'],['J','img/j.png'],['H','img/h.png'],['I','img/i.png'],['G','img/g.png'],['K','img/k.png'],
+        ['L','img/l.png'],['M','img/m.png'],['N','img/n.png'],['O','img/o.png'],['P','img/p.png'],['Q','img/q.png'],
+        ['R','img/r.png'],['S','img/s.png'],['T','img/t.png'],['U','img/u.png'],['V','img/v.png'],['W','img/w.png']];
 		this.length=5;
 		this.current = [];
         this.fen=document.querySelector('.fenshu>span');
