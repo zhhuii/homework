@@ -5,7 +5,7 @@ window.addEventListener('load',function(){
     let input = document.querySelectorAll('input');
     let zhe = document.querySelector('.zhe');
     let opacity = document.querySelector('.opacity');
-    let canvas = new Palette(can);
+    let canvas = new Palette(can,zhe,opacity);
     shape.forEach(e=>{
         let type = e.id;
         e.onclick = function(){
@@ -16,36 +16,15 @@ window.addEventListener('load',function(){
             if(type == 'poly' || type == 'polyj'){
                 let ang = prompt('请输入边数或度数')
                 canvas[type](ang);
+                canvas.zhe.style.display = 'none';
+                canvas.opacity.style.display = 'none';
             }else{
                 canvas[type]();
+                canvas.zhe.style.display = 'none';
+                canvas.opacity.style.display = 'none';
             }
             if(type == 'eraser'){
-                zhe.style.display = 'block';
-                opacity.style.display = 'block';
-                let maxH = opacity.offsetHeight -zhe.offsetHeight;
-                let maxW = opacity.offsetWidth - zhe.offsetWidth;
-                opacity.onmousemove = function(e){
-                    let zw = zhe.offsetWidth;
-                    let zh = zhe.offsetHeight;
-                    let ex = e.offsetX - zw/2;
-                    let ey = e.offsetY - zh/2;
-                    if(ex >= maxW){
-                        ex = maxW;
-                    }
-                    if(ey >= maxH){
-                        ey = maxH;
-                    }
-                    if(ex <= 0){
-                        ex = 0;
-                    }
-                    if(ey <= 0){
-                        ey =0;
-                    }
-                    zhe.style.top = ey+10+ 'px';
-                    zhe.style.left = ex+51+ 'px';
-                    canvas.ctx.clearRect(ex,ey,zw,zh)
-                }
-
+                canvas[type]();
             }
         }
     })

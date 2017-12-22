@@ -1,5 +1,5 @@
 class Palette{
-    constructor(canvas){
+    constructor(canvas,zhe,opacity){
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.cw = this.canvas.width;
@@ -8,6 +8,8 @@ class Palette{
         this.style = 'stroke';
         this.fillStyle = '#000000';
         this.strokeStyle = '#000000';
+        this.zhe = zhe;
+        this.opacity = opacity;
     }
     line(){
         let that = this;
@@ -82,6 +84,7 @@ class Palette{
         let that = this;
         that.canvas.onmousedown = function(e){
             let ox = e.offsetX,oy = e.offsetY;
+
             that.canvas.onmousemove = function(e){
                 that.ctx.clearRect(0,0,that.cw,that.ch);
                 that.ctx.beginPath();
@@ -204,6 +207,31 @@ class Palette{
         that.z();
     }
     eraser(){
-
+        let that = this;
+        that.zhe.style.display = 'block';
+        that.opacity.style.display = 'block';
+        let maxH = that.opacity.offsetHeight -that.zhe.offsetHeight;
+        let maxW = that.opacity.offsetWidth - that.zhe.offsetWidth;
+        that.opacity.onmousemove = function(e){
+            let zw = that.zhe.offsetWidth;
+            let zh = that.zhe.offsetHeight;
+            let ex = e.offsetX - zw/2;
+            let ey = e.offsetY - zh/2;
+            if(ex >= maxW){
+                ex = maxW;
+            }
+            if(ey >= maxH){
+                ey = maxH;
+            }
+            if(ex <= 0){
+                ex = 0;
+            }
+            if(ey <= 0){
+                ey =0;
+            }
+            that.zhe.style.top = ey+10+ 'px';
+            that.zhe.style.left = ex+51+ 'px';
+            that.ctx.clearRect(ex,ey,zw,zh)
+        }
     }
 }
